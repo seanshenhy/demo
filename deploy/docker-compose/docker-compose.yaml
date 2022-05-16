@@ -1,0 +1,11 @@
+version: '3'
+services:
+  rwdb:
+    image: mysql:5.7
+    container_name: mysql-lable
+    environment:
+      - "MYSQL_ROOT_PASSWORD=123456"
+      - "MYSQL_DATABASE=realworld"
+      - "TZ=Asia/Shanghai"
+    ports:
+      - 3306:3306

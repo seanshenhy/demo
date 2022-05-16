@@ -1,0 +1,611 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Realworld API
+    version: 0.0.1
+paths:
+    /api/articles:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_ListArticles
+            parameters:
+                - name: tag
+                  in: query
+                  schema:
+                    type: string
+                - name: author
+                  in: query
+                  schema:
+                    type: string
+                - name: favorited
+                  in: query
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: offset
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MultipleArticlesReply'
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_CreateArticle
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleArticlesReply'
+    /api/articles/favorite:
+        delete:
+            tags:
+                - Realworld
+            operationId: Realworld_UnfavoriteArticle
+            parameters:
+                - name: articleId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleArticlesReply'
+    /api/articles/feed:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_FeedArticles
+            parameters:
+                - name: limit
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+                - name: offset
+                  in: query
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MultipleArticlesReply'
+    /api/articles/{articleId}:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_GetArticle
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleArticlesReply'
+        put:
+            tags:
+                - Realworld
+            operationId: Realworld_DeleteArticle
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeleteArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleArticlesReply'
+    /api/articles/{articleId}/comments:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_GetComments
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MultipleCommentsReply'
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_AddComments
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddCommentsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleCommentReply'
+    /api/articles/{articleId}/comments/{commentId}:
+        delete:
+            tags:
+                - Realworld
+            operationId: Realworld_DeleteComment
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+                - name: commentId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleCommentReply'
+    /api/articles/{articleId}/favorite:
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_FavoriteArticle
+            parameters:
+                - name: articleId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/FavoriteArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/SingleArticlesReply'
+    /api/profiles/{userId}:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_GetProfile
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileReply'
+    /api/profiles/{userId}/follow:
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_UnfollowUser
+            parameters:
+                - name: userId
+                  in: path
+                  required: true
+                  schema:
+                    type: integer
+                    format: int64
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UnfollowUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileReply'
+    /api/tags:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_GetTags
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListTagsReply'
+    /api/user:
+        get:
+            tags:
+                - Realworld
+            operationId: Realworld_GetCurrentUser
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserReply'
+        put:
+            tags:
+                - Realworld
+            operationId: Realworld_UpdateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserReply'
+    /api/users:
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RegisterRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserReply'
+    /api/users/login:
+        post:
+            tags:
+                - Realworld
+            operationId: Realworld_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserReply'
+components:
+    schemas:
+        AddCommentsRequest:
+            type: object
+            properties:
+                articleId:
+                    type: integer
+                    format: int64
+                comment:
+                    $ref: '#/components/schemas/AddCommentsRequest_Comment'
+        AddCommentsRequest_Comment:
+            type: object
+            properties:
+                body:
+                    type: string
+        Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                body:
+                    type: string
+                tagList:
+                    type: array
+                    items:
+                        type: string
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                favorited:
+                    type: boolean
+                favoritesCount:
+                    type: integer
+                    format: uint32
+                author:
+                    $ref: '#/components/schemas/Author'
+                articleId:
+                    type: integer
+                    format: uint32
+        Author:
+            type: object
+            properties:
+                username:
+                    type: string
+                bio:
+                    type: string
+                image:
+                    type: string
+                following:
+                    type: boolean
+                userId:
+                    type: integer
+                    format: int64
+        Comment:
+            type: object
+            properties:
+                commentId:
+                    type: integer
+                    format: uint32
+                createdAt:
+                    type: string
+                updatedAt:
+                    type: string
+                body:
+                    type: string
+                author:
+                    $ref: '#/components/schemas/Author'
+        CreateArticleRequest:
+            type: object
+            properties:
+                article:
+                    $ref: '#/components/schemas/CreateArticleRequest_Article'
+        CreateArticleRequest_Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                body:
+                    type: string
+                tagList:
+                    type: array
+                    items:
+                        type: string
+        DeleteArticleRequest:
+            type: object
+            properties:
+                articleId:
+                    type: integer
+                    format: int64
+        FavoriteArticleRequest:
+            type: object
+            properties:
+                articleId:
+                    type: integer
+                    format: int64
+        FollowUserRequest:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: int64
+        ListTagsReply:
+            type: object
+            properties:
+                tags:
+                    type: array
+                    items:
+                        type: string
+        LoginRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/LoginRequest_User'
+        LoginRequest_User:
+            type: object
+            properties:
+                email:
+                    type: string
+                password:
+                    type: string
+        MultipleArticlesReply:
+            type: object
+            properties:
+                articles:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Article'
+                articlesCount:
+                    type: integer
+                    format: uint32
+        MultipleCommentsReply:
+            type: object
+            properties:
+                comments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/Comment'
+        ProfileReply:
+            type: object
+            properties:
+                profile:
+                    $ref: '#/components/schemas/ProfileReply_Profile'
+        ProfileReply_Profile:
+            type: object
+            properties:
+                username:
+                    type: string
+                bio:
+                    type: string
+                image:
+                    type: string
+                following:
+                    type: boolean
+                userId:
+                    type: integer
+                    format: int64
+        RegisterRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/RegisterRequest_User'
+        RegisterRequest_User:
+            type: object
+            properties:
+                username:
+                    type: string
+                email:
+                    type: string
+                password:
+                    type: string
+        SingleArticlesReply:
+            type: object
+            properties:
+                article:
+                    $ref: '#/components/schemas/Article'
+        SingleCommentReply:
+            type: object
+            properties:
+                comment:
+                    $ref: '#/components/schemas/Comment'
+        UnfollowUserRequest:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: int64
+        UpdateArticleRequest:
+            type: object
+            properties:
+                articleId:
+                    type: integer
+                    format: int64
+                article:
+                    $ref: '#/components/schemas/UpdateArticleRequest_Article'
+        UpdateArticleRequest_Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                description:
+                    type: string
+                body:
+                    type: string
+        UpdateUserRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UpdateUserRequest_User'
+        UpdateUserRequest_User:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: int64
+                email:
+                    type: string
+                bio:
+                    type: string
+                image:
+                    type: string
+                password:
+                    type: string
+                username:
+                    type: string
+        UserReply:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UserReply_User'
+        UserReply_User:
+            type: object
+            properties:
+                userId:
+                    type: integer
+                    format: int64
+                email:
+                    type: string
+                bio:
+                    type: string
+                image:
+                    type: string
+                password:
+                    type: string
+                token:
+                    type: string
+                username:
+                    type: string
+tags:
+    - name: Realworld
