@@ -75,6 +75,7 @@ func main() {
 	}
 	app, cleanup, err := initApp(bc.Server, bc.Data, bc.Jwt, logger)
 	if err != nil {
+
 		panic(err)
 	}
 	defer cleanup()
@@ -82,6 +83,5 @@ func main() {
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {
 		panic(err)
-
 	}
 }
