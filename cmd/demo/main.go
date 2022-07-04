@@ -82,5 +82,6 @@ func main() {
 	// start and wait for stop signal
 	if err := app.Run(); err != nil {
 		panic(err)
+
 	}
 }
